@@ -1,6 +1,6 @@
-name := "Hackathon 2019"
+name := "Hackathon 2020"
 
-crossScalaVersions in ThisBuild := Seq("2.11.8", "2.12.4")
+crossScalaVersions in ThisBuild := Seq("2.12.4") //Seq("2.11.8", "2.12.4")
 scalaVersion := (crossScalaVersions in ThisBuild).value.last
 
 
@@ -17,8 +17,8 @@ libraryDependencies ++= Seq(
   "edu.holycross.shot" %% "scm" % "7.2.0",
   "edu.holycross.shot" %% "ohco2" % "10.18.2",
   "edu.holycross.shot" %% "citeobj" % "7.2.0",
-  "edu.holycross.shot" %% "cex" % "6.4.1",
-  "edu.holycross.shot" %% "midvalidator" % "10.0.0",
+  "edu.holycross.shot" %% "cex" % "6.4.0",
+  "edu.holycross.shot" %% "midvalidator" % "12.2.2",
 
   "edu.holycross.shot" %% "latphone" % "2.7.2",
   "edu.holycross.shot.mid" %% "latin-text-model" % "1.3.0"
