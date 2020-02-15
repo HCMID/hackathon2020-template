@@ -27,7 +27,7 @@ val orthoMap : Map[String, MidOrthography] = Map(
 // 3. Build a validator. This requires ortho map as well as a CITE library.
 val repo = EditorsRepo(repoRoot, readerMap)
 
-def validate = {
+def validate(pg: String) = {
   val lib =    repo.library
   val dseValidator = DseValidator(lib)
   val validators = Vector(dseValidator)
@@ -36,10 +36,31 @@ def validate = {
   val formatted =  TestResultGroup("Valdation results", rslts)
   val output = "validation/report.md"
   new PrintWriter(output){write(formatted.markdown);close;}
-  println("Results are in " + output)
+  println("Results of validation are in " + output)
+
+
+  try {
+    val pgUrn = Cite2Urn(pg)
+    val ict = repo.dse.ictForSurface(pgUrn)
+    val verify = Vector(
+      "# Verification for page " + pgUrn.objectComponent,
+      "Use this link to check for completeness of your editing:",
+      s"- verify [page ${pg}](${ict})"
+    ).mkString("\n\n")
+
+    val verifyFile = "validation/verify.md"
+    new PrintWriter(verifyFile){write(verify);close;}
+    println("Link to verify completeness is in " + verifyFile)
+  } catch {
+    case t: Throwable => {
+      println("Wasn't able to create a verification view.")
+      println("Error message was:\n" + t)
+    }
+  }
+
 }
 
 
 
-println("\n\nTo validate your work, run:\n")
-println("\tvalidate\n\n")
+println("\n\nTo validate and verify you work for a page, run:\n")
+println("\tvalidate(\"PAGE_URN\")\n\n")
